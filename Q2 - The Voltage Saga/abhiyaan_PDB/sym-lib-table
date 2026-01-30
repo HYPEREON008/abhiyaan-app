@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 0)
+  (lib (name "abhiyaan_PDB-eagle-import")(type "KiCad")(uri "${KIPRJMOD}/abhiyaan_PDB-eagle-import.kicad_sym")(options "")(descr ""))
+)
