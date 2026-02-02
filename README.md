@@ -4,8 +4,7 @@ Sanmitra Goswami
 Roll No:  
 AM25B134  
 Previous Experience:  
-Very good at Throwing Pizza.  
-Knows how to make bombs (Killed Gus with that).  
+playing around with esp32 for a few days
 Current PoRs:  
 Deputy Coordinator in iBot Club  
 Why I want to be a part of Team Abhiyaan:  
@@ -18,6 +17,7 @@ PH1010: B
 EE1100: ongoing  
 Online  
 Basics of Hardware and PCB design from youtube used Kicad and CCS in that
+
 
 Other Relevant Things:  
 Hate Flies.  

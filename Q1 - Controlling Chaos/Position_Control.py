@@ -19,7 +19,7 @@ Give code for initializing System and PID controller
 """
 system = MotorSystem()
 
-pid = PID(kp=10.0, ki=8.0, kd=1.0)
+pid = PID(kp=5.0, ki=3.5, kd=2.0)
 
 # Data Storage
 time = np.zeros(steps)
