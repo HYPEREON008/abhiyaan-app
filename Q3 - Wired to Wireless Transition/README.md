@@ -121,6 +121,8 @@ Extended CAN → 29-bit ID
 
 RS-232 and RS-485 are both standards for serial communication, but they have different characteristics and applications.
 
+RS-232 is short-distance serial communication, while RS-485 is differential, long-distance, and multi-drop communication used in industrial networks.
+
 ## Part 2:
 going wireless
 
