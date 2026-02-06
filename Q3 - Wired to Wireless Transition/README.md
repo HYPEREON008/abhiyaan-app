@@ -7,13 +7,21 @@ Tinkercad Simulation Link: https://www.tinkercad.com/things/hJXx0PbD9kD-keypad-l
 ![alt text](image-2.png)
 I2C, or Inter-Integrated Circuit, is a simple communication protocol often used in embedded systems as a way to transfer data between a master (or multiple masters) and a single slave (or multiple slaves) device. It is a bidirectional two-wire serial bus that uses serial clock (SCL) and serial data (SDA) wires to send and manage data bit by bit between devices connected to the bus.
 
+> half duplex, 2 wires (SCL, SDA), multiple devices on same bus
+
 In I2C operations, the master controls the exchange of data between the devices. A master device will signal to a slave in order to send data or request a response. To accomplish this, all slave devices must have a unique address that is included in the I2C message.
 
 When sending data over the bus, each I2C message includes an address frame of the slave device and one or more data frames containing the data being transmitted. The message also includes start and stop conditions, read/write bits from either the master or slave, and ACK/NACK bits sent from the receiver for error checking.
 
+```
+START → Address + R/W → ACK → Data → ACK → STOP
+
+```
+
 I2C is considered to be synchronous, meaning it operates using a serial clock. The clock is driven by the master device which allows the output of bits to be synchronized to the sampling of bits by the clock signal shared between the master and the slave.
 
 The standard data transfer rate of the I2C protocol is 100 kbps, although data speeds of up to 5 Mbps are possible with I2C devices configured in "fast mode" or "ultra-fast mode".
+> less wires, multiple devices on same bus, simple to implement, easy to expand
 
 **SPI**
 ![alt text](image-1.png)
@@ -35,7 +43,14 @@ UART two-wire diagram
 
 UART data is sent over the bus in the form of a packet. A packet consists of a start bit, data frame, a parity bit, and stop bits. The parity bit is used as an error check mechanism to help ensure data integrity.
 
-UART is considered to be “universal” because the parameters including transfer speed and data speed are configurable by the developer. UART supports bidirectional data transmission, including half-duplex and full-duplex operations. It is also asynchronous, meaning it doesn’t use a clock signal to synchronize the output bits from the transmitting UART to the sampling bits on the receiving UART. Without a clock, the receiving and transmitting UART need to be on the same baud rate, or bit rate. This allows the system to know where and when the bits have been clocked.
+```
+Start bit → Data (5–9 bits) → Parity → Stop bit(s)
+
+```
+
+>UART is considered to be “universal” because the parameters including transfer speed and data speed are configurable by the developer. 
+
+UART supports bidirectional data transmission, including half-duplex and full-duplex operations. It is also asynchronous, meaning it doesn’t use a clock signal to synchronize the output bits from the transmitting UART to the sampling bits on the receiving UART. Without a clock, the receiving and transmitting UART need to be on the same baud rate, or bit rate. This allows the system to know where and when the bits have been clocked.
 
 **CAN**
 
@@ -51,6 +66,56 @@ Every message has a priority, so if two nodes try to send messages simultaneousl
 Error Capabilities
 
 The CAN specification includes a Cyclic Redundancy Code (CRC) to perform error checking on each frame's contents.  Frames with errors are disregarded by all nodes, and an error frame can be transmitted to signal the error to the network.  Global and local errors are differentiated by the controller, and if too many errors are detected, individual nodes can stop transmitting errors or disconnect itself from the network completely.
+
+1. CAN Physical Layer (How bits travel)
+Uses Differential Signaling
+
+Two wires:
+
+- CAN_H
+- CAN_L
+
+| Bit           | CAN_H | CAN_L | Voltage Difference |
+| ------------- | ----- | ----- | ------------------ |
+| (1) | ~2.5V | ~2.5V | ~0V                |
+| (0)  | ~3.5V | ~1.5V | ~2V                |
+
+> Why Differential?
+- Noise cancellation
+- EMI immunity
+- Long cable support
+- Reliable in harsh environments (automotive, factories)
+
+2. CAN Topology
+
+```
+[Node]----+----[Node]----+----[Node]
+           |              |
+         120Ω          120Ω
+
+```
+Linear bus
+3. CAN Frame Structure
+```
+SOF → ID → RTR → IDE → r0 → DLC → DATA → CRC → ACK → EOF
+```
+3.1 Start of Frame (SOF)
+
+1 dominant bit (0)
+
+Synchronizes all nodes
+
+3.2 Arbitration Field (VERY IMPORTANT)
+
+Contains:
+
+Identifier (11-bit or 29-bit)
+
+RTR bit
+
+Standard CAN → 11-bit ID
+Extended CAN → 29-bit ID
+
 
 **RS-485/232**
 
